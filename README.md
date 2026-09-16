@@ -52,7 +52,7 @@ Debugging Modes
 ==================
 
 
-A. LCC: Debug CPP (Preprocessor)
+A. LCC: Debug CPP (C -> preprocessed C)
 -----------------
 
 Source:
@@ -143,7 +143,7 @@ Recommended Debugging Order
 
 Start with:
 
-    1. LCC: Debug CPP (Preprocessor)
+    1. LCC: Debug CPP (C -> preprocessed C)
     2. LCC: Debug RCC (preprocessed C -> assembly)
 
 For compiler-construction study, spend most of the time debugging RCC.
