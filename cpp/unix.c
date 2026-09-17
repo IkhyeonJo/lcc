@@ -10,7 +10,7 @@ extern	int	optind;
 int	verbose;
 int	Mflag;	/* only print active include files */
 char	*objname; /* "src.$O: " */
-int	Cplusplus = 1;
+int	Cplusplus = 0;
 
 void
 setup(int argc, char **argv)
@@ -21,7 +21,7 @@ setup(int argc, char **argv)
 	extern void setup_kwtab(void);
 
 	setup_kwtab();
-	while ((c = getopt(argc, argv, "MNOVv+I:D:U:F:lg")) != -1)
+	while ((c = getopt(argc, argv, "MNOVvI:D:U:F:lg")) != -1)
 		switch (c) {
 		case 'N':
 			for (i=0; i<NINCLUDE; i++)
@@ -55,9 +55,6 @@ setup(int argc, char **argv)
 			break;
 		case 'V':
 			verbose++;
-			break;
-		case '+':
-			Cplusplus++;
 			break;
 		default:
 			break;

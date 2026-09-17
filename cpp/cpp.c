@@ -146,6 +146,7 @@ control(Tokenrow *trp)
 		break;
 
 	case KPRAGMA:
+		error(ERROR, "#pragma is not part of strict ANSI C90 mode");
 		return;
 
 	case KIFDEF:
@@ -205,7 +206,7 @@ control(Tokenrow *trp)
 
 	case KERROR:
 		trp->tp = tp+1;
-		error(WARNING, "#error directive: %r", trp);
+		error(ERROR, "#error directive is not part of ANSI C90");
 		break;
 
 	case KLINE:
@@ -236,7 +237,7 @@ control(Tokenrow *trp)
 		return;
 
 	case KEVAL:
-		eval(trp, np->val);
+		error(ERROR, "#eval directive is not part of ANSI C90");
 		break;
 
 	default:

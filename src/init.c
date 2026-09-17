@@ -140,6 +140,8 @@ static int initarray(len, ty, lev) Type ty; int len, lev; {
 		if (len > 0 && n >= len || t != ',')
 			break;
 		t = gettok();
+		if (t == '}')
+			error("trailing comma in initializer is not part of ANSI C90\n");
 	} while (t != '}');
 	return n;
 }
@@ -169,16 +171,18 @@ static int initchar(len, ty) Type ty; int len; {
 		if (len > 0 && n >= len || t != ',')
 			break;
 		t = gettok();
+		if (t == '}')
+			error("trailing comma in initializer is not part of ANSI C90\n");
 	} while (t != '}');
 	if (s > buf)
 		(*IR->defstring)(s - buf, buf);
 	return n;
 }
 
-/* initend - finish off an initialization at level lev; accepts trailing comma */
+/* initend - finish off an initialization at level lev */
 static void initend(lev, follow) int lev; char follow[]; {
 	if (lev == 0 && t == ',')
-		t = gettok();
+		error("trailing comma in initializer is not part of ANSI C90\n");
 	test('}', follow);
 }
 
@@ -252,7 +256,7 @@ static int initfields(p, q) Field p, q; {
 	return n;
 }
 
-/* initializer - constexpr | { constexpr ( , constexpr )* [ , ] } */
+/* initializer - constexpr | { constexpr ( , constexpr )* } */
 Type initializer(ty, lev) Type ty; int lev; {
 	int n = 0;
 	Tree e;
@@ -401,6 +405,8 @@ static int initstruct(len, ty, lev) Type ty; int len, lev; {
 		if (len > 0 && n >= len || t != ',')
 			break;
 		t = gettok();
+		if (t == '}')
+			error("trailing comma in initializer is not part of ANSI C90\n");
 	} while (t != '}');
 	return n;
 }

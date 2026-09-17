@@ -1121,8 +1121,8 @@ Type enumdcl() {
 			if (t != ',')
 				break;
 			t = gettok();
-			if (Aflag >= 2 && t == '}')
-				warning("non-ANSI trailing comma in enumerator list\n");
+			if (t == '}')
+				error("trailing comma in enumerator list is not part of ANSI C90\n");
 		}
 		test('}', follow);
 		ty->type = inttype;
