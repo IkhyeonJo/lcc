@@ -140,8 +140,6 @@ static int initarray(len, ty, lev) Type ty; int len, lev; {
 		if (len > 0 && n >= len || t != ',')
 			break;
 		t = gettok();
-		if (t == '}')
-			error("trailing comma in initializer is not part of ANSI C90\n");
 	} while (t != '}');
 	return n;
 }
@@ -171,15 +169,13 @@ static int initchar(len, ty) Type ty; int len; {
 		if (len > 0 && n >= len || t != ',')
 			break;
 		t = gettok();
-		if (t == '}')
-			error("trailing comma in initializer is not part of ANSI C90\n");
 	} while (t != '}');
 	if (s > buf)
 		(*IR->defstring)(s - buf, buf);
 	return n;
 }
 
-/* initend - finish off an initialization at level lev */
+/* initend - finish off an initialization at level lev; accepts trailing comma */
 static void initend(lev, follow) int lev; char follow[]; {
 	if (lev == 0 && t == ',')
 		error("trailing comma in initializer is not part of ANSI C90\n");
@@ -204,8 +200,6 @@ static int initfields(p, q) Field p, q; {
 				break;
 			p = p->link;
 		} while (t == ',' && (t = gettok()) != 0);
-		if (t == '}')
-			error("trailing comma in initializer is not part of ANSI C90\n");
 		if (q && (n = q->offset - p->offset) < unsignedtype->size)
 			if (IR->little_endian)
 				for (i = 0; i < n; i++) {
@@ -407,8 +401,6 @@ static int initstruct(len, ty, lev) Type ty; int len, lev; {
 		if (len > 0 && n >= len || t != ',')
 			break;
 		t = gettok();
-		if (t == '}')
-			error("trailing comma in initializer is not part of ANSI C90\n");
 	} while (t != '}');
 	return n;
 }

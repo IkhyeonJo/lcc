@@ -146,8 +146,7 @@ control(Tokenrow *trp)
 		break;
 
 	case KPRAGMA:
-		error(ERROR, "#pragma directive is not part of strict ANSI C90");
-		break;
+		return;
 
 	case KIFDEF:
 	case KIFNDEF:
@@ -205,7 +204,6 @@ control(Tokenrow *trp)
 		break;
 
 	case KERROR:
-		trp->tp = tp+1;
 		error(ERROR, "#error directive is not part of ANSI C90");
 		break;
 

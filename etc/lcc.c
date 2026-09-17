@@ -102,7 +102,7 @@ main(argc, argv) char *argv[]; {
 	if (signal(SIGHUP, SIG_IGN) != SIG_IGN)
 		signal(SIGHUP, interrupt);
 #endif
-	plist = 0;
+	plist = append("-D__LCC__", append("-Dunix", 0));
 	if (argc <= 1) {
 		help();
 		exit(0);
