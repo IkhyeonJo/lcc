@@ -11,4 +11,4 @@ struct S {
     const unsigned int x;
     volatile int y;
 };
-int main(void) { struct S s; s.x = 1; s.y = 2; return s.x + s.y; }
+int main(void) { struct S s = { 1, 2 }; return s.x + s.y; }

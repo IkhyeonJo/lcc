@@ -147,3 +147,16 @@ Start with:
     2. LCC: Debug RCC (preprocessed C -> assembly)
 
 For compiler-construction study, spend most of the time debugging RCC.
+
+## Strict ANSI C90 status
+
+This tree is configured for strict C89/C90 source acceptance rather than C++/C99 extensions.
+
+- C++ `//` comments are disabled in the LCC preprocessor; the token sequence is left for the C parser to reject as invalid C90 syntax.
+- `#error` and `#eval` are rejected as non-C90 directives.
+- Enum trailing commas are rejected because they are not C90 syntax.
+- Initializer trailing commas are accepted because they are valid C90 syntax.
+- `#pragma` remains accepted/ignored because C90 specifies pragma behavior as implementation-defined.
+- Nonstandard `-D__LCC__` / `-Dunix` injection is not performed by the current Unix LCC driver.
+
+The test corpus under `tests/` contains C89/C90 grammar-production and syntax tests. The helper `tests/run-strict-c90-frontend.sh` validates the standalone preprocessor build and the strict-extension cases that can be checked without the target backend.

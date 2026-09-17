@@ -175,10 +175,8 @@ static int initchar(len, ty) Type ty; int len; {
 	return n;
 }
 
-/* initend - finish off an initialization at level lev; accepts trailing comma */
+/* initend - finish off an initialization at level lev */
 static void initend(lev, follow) int lev; char follow[]; {
-	if (lev == 0 && t == ',')
-		error("trailing comma in initializer is not part of ANSI C90\n");
 	test('}', follow);
 }
 
