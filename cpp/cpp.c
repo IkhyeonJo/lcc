@@ -146,8 +146,8 @@ control(Tokenrow *trp)
 		break;
 
 	case KPRAGMA:
-		error(ERROR, "#pragma is not part of strict ANSI C90 mode");
-		return;
+		error(ERROR, "#pragma directive is not part of strict ANSI C90");
+		break;
 
 	case KIFDEF:
 	case KIFNDEF:

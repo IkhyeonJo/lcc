@@ -204,6 +204,8 @@ static int initfields(p, q) Field p, q; {
 				break;
 			p = p->link;
 		} while (t == ',' && (t = gettok()) != 0);
+		if (t == '}')
+			error("trailing comma in initializer is not part of ANSI C90\n");
 		if (q && (n = q->offset - p->offset) < unsignedtype->size)
 			if (IR->little_endian)
 				for (i = 0; i < n; i++) {
@@ -256,7 +258,7 @@ static int initfields(p, q) Field p, q; {
 	return n;
 }
 
-/* initializer - constexpr | { constexpr ( , constexpr )* } */
+/* initializer - constexpr | { constexpr ( , constexpr )* [ , ] } */
 Type initializer(ty, lev) Type ty; int lev; {
 	int n = 0;
 	Tree e;

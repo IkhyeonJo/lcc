@@ -2,7 +2,7 @@
 extern Interface nullIR,   symbolicIR;
 extern Interface mipsebIR, mipselIR;
 extern Interface sparcIR,  solarisIR;
-extern Interface x86IR;
+extern Interface x86IR, x86gasIR;
 Binding bindings[] = {
 	"symbolic",      &symbolicIR,
 	"mips-irix",     &mipsebIR,
@@ -10,12 +10,14 @@ Binding bindings[] = {
 	"sparc-sun",     &sparcIR,
 	"sparc-solaris", &solarisIR,
 	"x86-dos",       &x86IR,
+	"x86-linux-gas", &x86gasIR,
 	"symbolic/irix", &symbolicIR,		/* omit */
 	"mips/irix",     &mipsebIR,		/* omit */
 	"mips/ultrix",   &mipselIR,		/* omit */
 	"sparc/sun",     &sparcIR,		/* omit */
 	"sparc/solaris", &solarisIR,		/* omit */
 	"x86/dos",       &x86IR,		/* omit */
+	"x86/linux-gas", &x86gasIR,	/* omit */
 	"null",          &nullIR,
 	NULL,            NULL
 };
