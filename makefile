@@ -40,7 +40,8 @@ RCCOBJS=$(BUILDDIR)/alloc.o \
 	$(BUILDDIR)/gen.o \
 	$(BUILDDIR)/mips.o \
 	$(BUILDDIR)/sparc.o \
-	$(BUILDDIR)/x86.o
+	$(BUILDDIR)/x86.o \
+	$(BUILDDIR)/x86nasm.o
 
 $(BUILDDIR)/rcc:	$(RCCOBJS)
 			$(CC) $(CFLAGS) -o $@ $(LDFLAGS) $(RCCOBJS)
@@ -77,10 +78,12 @@ $(BUILDDIR)/types.o:	src/types.c;	$(CC) -c $(CFLAGS) -Isrc -o $@ src/types.c
 $(BUILDDIR)/mips.o:	$(BUILDDIR)/mips.c;	$(CC) -c $(CFLAGS) -Isrc -o $@ $(BUILDDIR)/mips.c
 $(BUILDDIR)/sparc.o:	$(BUILDDIR)/sparc.c;	$(CC) -c $(CFLAGS) -Isrc -o $@ $(BUILDDIR)/sparc.c
 $(BUILDDIR)/x86.o:	$(BUILDDIR)/x86.c;	$(CC) -c $(CFLAGS) -Isrc -o $@ $(BUILDDIR)/x86.c
+$(BUILDDIR)/x86nasm.o:	$(BUILDDIR)/x86nasm.c;	$(CC) -c $(CFLAGS) -Isrc -o $@ $(BUILDDIR)/x86nasm.c
 
 $(BUILDDIR)/mips.c:	$(BUILDDIR)/lburg src/mips.md;	$(BUILDDIR)/lburg <src/mips.md  >$@
 $(BUILDDIR)/sparc.c:	$(BUILDDIR)/lburg src/sparc.md;	$(BUILDDIR)/lburg <src/sparc.md >$@
 $(BUILDDIR)/x86.c:	$(BUILDDIR)/lburg src/x86.md;	$(BUILDDIR)/lburg <src/x86.md   >$@
+$(BUILDDIR)/x86nasm.c:	$(BUILDDIR)/lburg src/x86nasm.md;	$(BUILDDIR)/lburg <src/x86nasm.md >$@
 
 YFLAGS=
 $(BUILDDIR)/lburg:	$(BUILDDIR)/lburg.o $(BUILDDIR)/gram.o
