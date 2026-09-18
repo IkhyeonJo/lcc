@@ -1,5 +1,5 @@
-#line 1 "/home/peter_cho/lcc/hello.c"
-#line 1 "/home/peter_cho/lcc/build-ubuntu24/lcc-build/include/stdio.h"
+#line 1 "/home/ubuntu/lcc/hello.c"
+#line 1 "/home/ubuntu/lcc/build-ubuntu24/lcc-build/include/stdio.h"
 
 
 
@@ -103,8 +103,8 @@ extern void perror(const char *);
 
 
 
-#line 2 "/home/peter_cho/lcc/hello.c"
-#line 1 "/home/peter_cho/lcc/build-ubuntu24/lcc-build/include/stdlib.h"
+#line 2 "/home/ubuntu/lcc/hello.c"
+#line 1 "/home/ubuntu/lcc/build-ubuntu24/lcc-build/include/stdlib.h"
 
 
 
@@ -159,8 +159,8 @@ extern size_t mbstowcs(wchar_t *, const char *, size_t);
 extern size_t wcstombs(char *, const wchar_t *, size_t);
 
 
-#line 3 "/home/peter_cho/lcc/hello.c"
-#line 1 "/home/peter_cho/lcc/build-ubuntu24/lcc-build/include/string.h"
+#line 3 "/home/ubuntu/lcc/hello.c"
+#line 1 "/home/ubuntu/lcc/build-ubuntu24/lcc-build/include/string.h"
 
 
 
@@ -196,7 +196,7 @@ char *strerror(int);
 size_t strlen(const char *);
 
 
-#line 4 "/home/peter_cho/lcc/hello.c"
+#line 4 "/home/ubuntu/lcc/hello.c"
 
 int main(void)
 {
