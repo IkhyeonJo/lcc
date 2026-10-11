@@ -33,9 +33,12 @@ fi
 
 # The historical port explicitly states that it was tested with LCC 3.6.
 # It uses NASM as the x86 backend and provides Linux ELF driver code.
-cp "$NASMDIR/x86nasm.md" "$LCC/src/x86nasm.md"
-cp "$NASMDIR/lin-elf.c" "$LCC/etc/lin-elf.c"
-cp "$NASMDIR/bind.c" "$LCC/src/bind.c"
+# These files are now maintained in this repository (bind.c also registers
+# the AT&T x86/linux back end, and lin-elf.c defaults to GNU as), so only
+# seed them from the NASM archive when they are missing.
+[[ -f "$LCC/src/x86nasm.md" ]] || cp "$NASMDIR/x86nasm.md" "$LCC/src/x86nasm.md"
+[[ -f "$LCC/etc/lin-elf.c" ]] || cp "$NASMDIR/lin-elf.c" "$LCC/etc/lin-elf.c"
+[[ -f "$LCC/src/bind.c"    ]] || cp "$NASMDIR/bind.c" "$LCC/src/bind.c"
 
 # Ubuntu installs NASM as /usr/bin/nasm, while the historical LCC Linux
 # driver hard-codes /usr/local/bin/nasm.  Use the NASM executable actually
@@ -76,6 +79,8 @@ print("LCC Linux driver linker: /usr/bin/gcc -m32")
 PY
 
 # The historical README asks for x86nasm.o in the RCC object list and rules.
+# (The makefile in this repository already lists x86nasm.o and x86linux.o;
+# this patch is a no-op there.)
 python3 - "$LCC/makefile" <<'PY'
 from pathlib import Path
 p=Path(__import__('sys').argv[1])

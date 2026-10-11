@@ -32,7 +32,7 @@
     {
       "label": "LCC: RCC compile hello.i",
       "type": "shell",
-      "command": "${workspaceFolder}/build-ubuntu24/lcc-build/rcc -target=x86/nasm -g ${workspaceFolder}/hello.i ${workspaceFolder}/hello.s",
+      "command": "${workspaceFolder}/build-ubuntu24/lcc-build/rcc -target=x86/linux -g ${workspaceFolder}/hello.i ${workspaceFolder}/hello.s",
       "options": {
         "cwd": "${workspaceFolder}"
       },

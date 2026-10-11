@@ -36,8 +36,12 @@ Run the task **LCC: Preprocess hello.c** first (or use the task from Command Pal
 This is the main compiler-study configuration. It launches:
 
 ```text
-rcc -target=x86/nasm -g hello.i hello.s
+rcc -target=x86/linux -g hello.i hello.s      # AT&T syntax (default)
 ```
+
+A NASM variant is also provided (`LCC: Debug RCC (preprocessed C -> NASM assembly)`),
+which runs `rcc -target=x86/nasm -g hello.i hello.nasm.s`; assemble that output
+with `LCC: Run NASM`. The default AT&T output is assembled with `LCC: Run GNU as`.
 
 Set breakpoints in `src/` and step through parsing, semantic analysis, tree/IR construction, and code generation.
 
@@ -79,10 +83,10 @@ lcc (etc/lcc.c)
   |
   +--> rcc
   |      |
-  |      +--> x86/nasm backend
-  |              |
-  |              v
-  |            NASM
+  |      +--> x86/linux backend (AT&T, default)   or   x86/nasm backend (-asm=nasm)
+  |              |                                      |
+  |              v                                      v
+  |            GNU as (as --32)                        NASM
   |
   +--> gcc -m32 (final link)
   |

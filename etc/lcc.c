@@ -453,6 +453,7 @@ static void help() {
 "-P	print ANSI-style declarations for globals\n",
 "-p -pg	emit profiling code; see prof(1) and gprof(1)\n",
 "-pipe	pipe the preprocessor output to the compiler\n",
+"-asm=name	select assembler/back end (lin-elf: att [default] or nasm)\n",
 "-S	compile to assembly language\n",
 "-t -tname	emit function tracing calls to printf or to `name'\n",
 #ifdef sparc
@@ -505,6 +506,13 @@ static void opt(arg) char *arg; {
 			}
 		fprintf(stderr, "%s: %s ignored\n", progname, arg);
 		return;
+	case 'a':	/* -asm=name: host-specific assembler/back-end choice */
+		if (strncmp(arg, "-asm=", 5) == 0) {
+			if (!option(arg))
+				fprintf(stderr, "%s: %s ignored\n", progname, arg);
+			return;
+		}
+		break;
 	case 'n':
 		if (strcmp(arg, "-nopipe") == 0)
 			pipeflag = 0;

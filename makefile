@@ -41,7 +41,8 @@ RCCOBJS=$(BUILDDIR)/alloc.o \
 	$(BUILDDIR)/mips.o \
 	$(BUILDDIR)/sparc.o \
 	$(BUILDDIR)/x86.o \
-	$(BUILDDIR)/x86nasm.o
+	$(BUILDDIR)/x86nasm.o \
+	$(BUILDDIR)/x86linux.o
 
 $(BUILDDIR)/rcc:	$(RCCOBJS)
 			$(CC) $(CFLAGS) -o $@ $(LDFLAGS) $(RCCOBJS)
@@ -79,11 +80,13 @@ $(BUILDDIR)/mips.o:	$(BUILDDIR)/mips.c;	$(CC) -c $(CFLAGS) -Isrc -o $@ $(BUILDDI
 $(BUILDDIR)/sparc.o:	$(BUILDDIR)/sparc.c;	$(CC) -c $(CFLAGS) -Isrc -o $@ $(BUILDDIR)/sparc.c
 $(BUILDDIR)/x86.o:	$(BUILDDIR)/x86.c;	$(CC) -c $(CFLAGS) -Isrc -o $@ $(BUILDDIR)/x86.c
 $(BUILDDIR)/x86nasm.o:	$(BUILDDIR)/x86nasm.c;	$(CC) -c $(CFLAGS) -Isrc -o $@ $(BUILDDIR)/x86nasm.c
+$(BUILDDIR)/x86linux.o:	$(BUILDDIR)/x86linux.c;	$(CC) -c $(CFLAGS) -Isrc -o $@ $(BUILDDIR)/x86linux.c
 
 $(BUILDDIR)/mips.c:	$(BUILDDIR)/lburg src/mips.md;	$(BUILDDIR)/lburg <src/mips.md  >$@
 $(BUILDDIR)/sparc.c:	$(BUILDDIR)/lburg src/sparc.md;	$(BUILDDIR)/lburg <src/sparc.md >$@
 $(BUILDDIR)/x86.c:	$(BUILDDIR)/lburg src/x86.md;	$(BUILDDIR)/lburg <src/x86.md   >$@
 $(BUILDDIR)/x86nasm.c:	$(BUILDDIR)/lburg src/x86nasm.md;	$(BUILDDIR)/lburg <src/x86nasm.md >$@
+$(BUILDDIR)/x86linux.c:	$(BUILDDIR)/lburg src/x86linux.md;	$(BUILDDIR)/lburg <src/x86linux.md >$@
 
 YFLAGS=
 $(BUILDDIR)/lburg:	$(BUILDDIR)/lburg.o $(BUILDDIR)/gram.o
@@ -216,7 +219,7 @@ triple:		$(BUILDDIR)/rcc $(BUILDDIR)/lcc $(BUILDDIR)/cpp
 
 clean:		testclean
 		-rm -f `ls $(BUILDDIR)/*.o|sed /bbexit.o/d`
-		-rm -f $(BUILDDIR)/mips.c $(BUILDDIR)/sparc.c $(BUILDDIR)/x86.c $(BUILDDIR)/gram.c
+		-rm -f $(BUILDDIR)/mips.c $(BUILDDIR)/sparc.c $(BUILDDIR)/x86.c $(BUILDDIR)/x86nasm.c $(BUILDDIR)/x86linux.c $(BUILDDIR)/gram.c
 		-rm -f $(BUILDDIR)/rcc[12] $(BUILDDIR)/[12]rcc
 
 
