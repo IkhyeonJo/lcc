@@ -40,8 +40,13 @@ rcc -target=x86/linux -g hello.i hello.s      # AT&T syntax (default)
 ```
 
 A NASM variant is also provided (`LCC: Debug RCC (preprocessed C -> NASM assembly)`),
-which runs `rcc -target=x86/nasm -g hello.i hello.nasm.s`; assemble that output
-with `LCC: Run NASM`. The default AT&T output is assembled with `LCC: Run GNU as`.
+which runs `rcc -target=x86/nasm -g hello.i hello.nasm.s`.
+
+Assembling and linking are not debugged, so they are tasks (Terminal > Run Task),
+not launch configurations:
+
+- `LCC: Link hello (AT&T)` (default build task, Ctrl+Shift+B): rcc -> `as --32` -> `gcc -m32`
+- `LCC: Link hello (NASM)`: rcc -> `nasm -f elf32` -> `gcc -m32` (writes `hello.nasm*`)
 
 Set breakpoints in `src/` and step through parsing, semantic analysis, tree/IR construction, and code generation.
 

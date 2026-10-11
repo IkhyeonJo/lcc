@@ -35,40 +35,6 @@
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {
-      "name": "LCC: Run GNU as (Assembling: AT&T assembly -> object)",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "/usr/bin/as",
-      "args": [
-        "--32",
-        "-o",
-        "${workspaceFolder}/hello.o",
-        "${workspaceFolder}/hello.s"
-      ],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "externalConsole": false,
-      "MIMode": "gdb",
-      "miDebuggerPath": "/usr/bin/gdb"
-    },
-    {
-      "name": "LCC: Run GCC (Linking: object -> executable)",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "/usr/bin/gcc",
-      "args": [
-        "-m32",
-        "${workspaceFolder}/hello.o",
-        "-o",
-        "${workspaceFolder}/hello"
-      ],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "externalConsole": false,
-      "MIMode": "gdb",
-      "miDebuggerPath": "/usr/bin/gdb"
-    },
-    {
       "name": "LCC: Debug RCC (preprocessed C -> NASM assembly)",
       "type": "cppdbg",
       "request": "launch",
@@ -78,24 +44,6 @@
         "-g",
         "${workspaceFolder}/hello.i",
         "${workspaceFolder}/hello.nasm.s"
-      ],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "externalConsole": false,
-      "MIMode": "gdb",
-      "miDebuggerPath": "/usr/bin/gdb"
-    },
-    {
-      "name": "LCC: Run NASM (Assembling: NASM assembly -> object)",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "/usr/bin/nasm",
-      "args": [
-        "-f",
-        "elf32",
-        "${workspaceFolder}/hello.nasm.s",
-        "-o",
-        "${workspaceFolder}/hello.o"
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

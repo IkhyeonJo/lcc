@@ -30,14 +30,68 @@
       "problemMatcher": []
     },
     {
-      "label": "LCC: RCC compile hello.i",
+      "label": "LCC: RCC compile hello.i (AT&T)",
       "type": "shell",
       "command": "${workspaceFolder}/build-ubuntu24/lcc-build/rcc -target=x86/linux -g ${workspaceFolder}/hello.i ${workspaceFolder}/hello.s",
       "options": {
         "cwd": "${workspaceFolder}"
       },
-      "dependsOn": "LCC: Preprocess hello.c",
-      "problemMatcher": []
+      "problemMatcher": [],
+      "dependsOn": "LCC: Preprocess hello.c"
+    },
+    {
+      "label": "LCC: Assemble hello.s (GNU as)",
+      "type": "shell",
+      "command": "/usr/bin/as --32 -o ${workspaceFolder}/hello.o ${workspaceFolder}/hello.s",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "dependsOn": "LCC: RCC compile hello.i (AT&T)"
+    },
+    {
+      "label": "LCC: Link hello (AT&T)",
+      "type": "shell",
+      "command": "/usr/bin/gcc -m32 ${workspaceFolder}/hello.o -o ${workspaceFolder}/hello",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "dependsOn": "LCC: Assemble hello.s (GNU as)",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "LCC: RCC compile hello.i (NASM)",
+      "type": "shell",
+      "command": "${workspaceFolder}/build-ubuntu24/lcc-build/rcc -target=x86/nasm -g ${workspaceFolder}/hello.i ${workspaceFolder}/hello.nasm.s",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "dependsOn": "LCC: Preprocess hello.c"
+    },
+    {
+      "label": "LCC: Assemble hello.nasm.s (NASM)",
+      "type": "shell",
+      "command": "/usr/bin/nasm -f elf32 ${workspaceFolder}/hello.nasm.s -o ${workspaceFolder}/hello.nasm.o",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "dependsOn": "LCC: RCC compile hello.i (NASM)"
+    },
+    {
+      "label": "LCC: Link hello (NASM)",
+      "type": "shell",
+      "command": "/usr/bin/gcc -m32 ${workspaceFolder}/hello.nasm.o -o ${workspaceFolder}/hello.nasm",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "dependsOn": "LCC: Assemble hello.nasm.s (NASM)"
     }
   ]
 }
