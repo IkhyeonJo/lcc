@@ -42,7 +42,7 @@
     {
       "label": "LCC: Assemble hello.s (GNU as)",
       "type": "shell",
-      "command": "/usr/bin/as --32 -o ${workspaceFolder}/hello.o ${workspaceFolder}/hello.s",
+      "command": "/usr/bin/as --32 -g -o ${workspaceFolder}/hello.o ${workspaceFolder}/hello.s",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -76,7 +76,7 @@
     {
       "label": "LCC: Assemble hello.nasm.s (NASM)",
       "type": "shell",
-      "command": "/usr/bin/nasm -f elf32 ${workspaceFolder}/hello.nasm.s -o ${workspaceFolder}/hello.nasm.o",
+      "command": "/usr/bin/nasm -f elf32 -g -F dwarf ${workspaceFolder}/hello.nasm.s -o ${workspaceFolder}/hello.nasm.o",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -92,6 +92,24 @@
       },
       "problemMatcher": [],
       "dependsOn": "LCC: Assemble hello.nasm.s (NASM)"
+    },
+    {
+      "label": "LCC: Link only hello.o (AT&T)",
+      "type": "shell",
+      "command": "/usr/bin/gcc -m32 ${workspaceFolder}/hello.o -o ${workspaceFolder}/hello",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "LCC: Link only hello.nasm.o (NASM)",
+      "type": "shell",
+      "command": "/usr/bin/gcc -m32 ${workspaceFolder}/hello.nasm.o -o ${workspaceFolder}/hello.nasm",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
     }
   ]
 }

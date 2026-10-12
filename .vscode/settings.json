@@ -12,5 +12,6 @@
   },
   "search.exclude": {
     "**/build-ubuntu24/lcc-build": true
-  }
+  },
+  "debug.allowBreakpointsEverywhere": true
 }

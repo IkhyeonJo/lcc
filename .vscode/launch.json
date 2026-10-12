@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "LCC: Debug CPP (C -> preprocessed C)",
+      "name": "AT&T 1/4: Preprocess (cpp: hello.c -> hello.i)",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build-ubuntu24/lcc-build/cpp",
@@ -15,10 +15,21 @@
       "cwd": "${workspaceFolder}",
       "externalConsole": false,
       "MIMode": "gdb",
-      "miDebuggerPath": "/usr/bin/gdb"
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Disassembly flavor",
+          "text": "-gdb-set disassembly-flavor att",
+          "ignoreFailures": true
+        }
+      ],
+      "presentation": {
+        "group": "1. AT&T",
+        "order": 1
+      }
     },
     {
-      "name": "LCC: Debug RCC (preprocessed C -> AT&T assembly)",
+      "name": "AT&T 2/4: Compile (rcc x86/linux: hello.i -> hello.s)",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build-ubuntu24/lcc-build/rcc",
@@ -32,10 +43,101 @@
       "cwd": "${workspaceFolder}",
       "externalConsole": false,
       "MIMode": "gdb",
-      "miDebuggerPath": "/usr/bin/gdb"
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Disassembly flavor",
+          "text": "-gdb-set disassembly-flavor att",
+          "ignoreFailures": true
+        }
+      ],
+      "presentation": {
+        "group": "1. AT&T",
+        "order": 2
+      }
     },
     {
-      "name": "LCC: Debug RCC (preprocessed C -> NASM assembly)",
+      "name": "AT&T 3/4: Assemble (GNU as: hello.s -> hello.o)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "/usr/bin/as",
+      "args": [
+        "--32",
+        "-g",
+        "-o",
+        "${workspaceFolder}/hello.o",
+        "${workspaceFolder}/hello.s"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Disassembly flavor",
+          "text": "-gdb-set disassembly-flavor att",
+          "ignoreFailures": true
+        }
+      ],
+      "presentation": {
+        "group": "1. AT&T",
+        "order": 3
+      }
+    },
+    {
+      "name": "AT&T 4/4: Link + Debug (gcc -m32: hello.o -> hello)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/hello",
+      "args": [],
+      "stopAtEntry": true,
+      "cwd": "${workspaceFolder}",
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "preLaunchTask": "LCC: Link only hello.o (AT&T)",
+      "setupCommands": [
+        {
+          "description": "Disassembly flavor",
+          "text": "-gdb-set disassembly-flavor att",
+          "ignoreFailures": true
+        }
+      ],
+      "presentation": {
+        "group": "1. AT&T",
+        "order": 4
+      }
+    },
+    {
+      "name": "NASM 1/4: Preprocess (cpp: hello.c -> hello.i)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build-ubuntu24/lcc-build/cpp",
+      "args": [
+        "-I${workspaceFolder}/build-ubuntu24/lcc-build/include",
+        "${workspaceFolder}/hello.c",
+        "${workspaceFolder}/hello.i"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Disassembly flavor",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
+        }
+      ],
+      "presentation": {
+        "group": "2. NASM",
+        "order": 1
+      }
+    },
+    {
+      "name": "NASM 2/4: Compile (rcc x86/nasm: hello.i -> hello.nasm.s)",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build-ubuntu24/lcc-build/rcc",
@@ -49,7 +151,74 @@
       "cwd": "${workspaceFolder}",
       "externalConsole": false,
       "MIMode": "gdb",
-      "miDebuggerPath": "/usr/bin/gdb"
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Disassembly flavor",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
+        }
+      ],
+      "presentation": {
+        "group": "2. NASM",
+        "order": 2
+      }
+    },
+    {
+      "name": "NASM 3/4: Assemble (nasm: hello.nasm.s -> hello.nasm.o)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "/usr/bin/nasm",
+      "args": [
+        "-f",
+        "elf32",
+        "-g",
+        "-F",
+        "dwarf",
+        "${workspaceFolder}/hello.nasm.s",
+        "-o",
+        "${workspaceFolder}/hello.nasm.o"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Disassembly flavor",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
+        }
+      ],
+      "presentation": {
+        "group": "2. NASM",
+        "order": 3
+      }
+    },
+    {
+      "name": "NASM 4/4: Link + Debug (gcc -m32: hello.nasm.o -> hello.nasm)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/hello.nasm",
+      "args": [],
+      "stopAtEntry": true,
+      "cwd": "${workspaceFolder}",
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "preLaunchTask": "LCC: Link only hello.nasm.o (NASM)",
+      "setupCommands": [
+        {
+          "description": "Disassembly flavor",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
+        }
+      ],
+      "presentation": {
+        "group": "2. NASM",
+        "order": 4
+      }
     }
   ]
 }
