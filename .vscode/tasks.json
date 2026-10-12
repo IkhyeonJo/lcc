@@ -110,6 +110,16 @@
         "cwd": "${workspaceFolder}"
       },
       "problemMatcher": []
+    },
+    {
+      "label": "LCC: Test AT&T vs NASM (tests/ + tst/)",
+      "type": "shell",
+      "command": "${workspaceFolder}/tests/att-vs-nasm/run.sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "test",
+      "problemMatcher": []
     }
   ]
 }

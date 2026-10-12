@@ -9,6 +9,17 @@
  *   - operand size is carried by the mnemonic suffix (b/w/l, s/l for x87)
  *   - memory operands are disp(base,index,scale)
  *
+ * The grammar (rules, rule order, costs, chain rules) mirrors x86nasm.md
+ * one-to-one so both back ends select the same instructions.  The only
+ * extra nonterminal is `ibase': the same rules as `base' but rendered as an
+ * open "disp(basereg" prefix, so that  addr: ADDx(index,ibase)  "%1,%0)"
+ * yields  disp(basereg,index,scale)  exactly like NASM's  [%1 + %0].
+ * Keeping the chain  ibase: reg  is what lets gen.c's reuse() fold a
+ * register-cached global address back into  sym(,index,scale).
+ * Likewise `iindex' is `index' rendered as a complete operand for
+ * addr: index, so a bare register prints as (%reg) -- not (,%reg,1), which
+ * GAS would encode with a 32-bit zero displacement.
+ *
  * Select it with  rcc -target=x86/linux  (alias: -target=x86/att).
  */
 enum { EAX=0, ECX=1, EDX=2, EBX=3, ESI=6, EDI=7 };
@@ -136,24 +147,25 @@ index: LSHU(reg,con1)  "%0,2"
 index: LSHU(reg,con2)  "%0,4"
 index: LSHU(reg,con3)  "%0,8"
 
-gsym:  ADDRGP  "%a"
-fpoff: ADDRFP  "%a"
-fpoff: ADDRLP  "%a"
-
+iindex: reg "(%0)"
+iindex: LSHI(reg,con1)  "(,%0,2)"
+iindex: LSHI(reg,con2)  "(,%0,4)"
+iindex: LSHI(reg,con3)  "(,%0,8)"
+iindex: LSHU(reg,con1)  "(,%0,2)"
+iindex: LSHU(reg,con2)  "(,%0,4)"
+iindex: LSHU(reg,con3)  "(,%0,8)"
+ibase: ADDRGP          "%a("
+ibase: reg             "(%0"
+ibase: ADDI(reg,acon)  "%1(%0"
+ibase: ADDP(reg,acon)  "%1(%0"
+ibase: ADDU(reg,acon)  "%1(%0"
+ibase: ADDRFP  "%a(%%ebp"
+ibase: ADDRLP  "%a(%%ebp"
 addr: base              "%0"
-addr: ADDI(index,reg)              "(%1,%0)"
-addr: ADDP(index,reg)              "(%1,%0)"
-addr: ADDU(index,reg)              "(%1,%0)"
-addr: ADDI(index,gsym)             "%1(,%0)"
-addr: ADDP(index,gsym)             "%1(,%0)"
-addr: ADDU(index,gsym)             "%1(,%0)"
-addr: ADDI(index,fpoff)            "%1(%%ebp,%0)"
-addr: ADDP(index,fpoff)            "%1(%%ebp,%0)"
-addr: ADDU(index,fpoff)            "%1(%%ebp,%0)"
-addr: ADDI(index,ADDI(reg,acon))   "%2(%1,%0)"
-addr: ADDP(index,ADDP(reg,acon))   "%2(%1,%0)"
-addr: ADDU(index,ADDU(reg,acon))   "%2(%1,%0)"
-addr: index  "(,%0)"  1
+addr: ADDI(index,ibase)  "%1,%0)"
+addr: ADDP(index,ibase)  "%1,%0)"
+addr: ADDU(index,ibase)  "%1,%0)"
+addr: iindex  "%0"
 mem: INDIRC(addr)  "%0"
 mem: INDIRI(addr)  "%0"
 mem: INDIRP(addr)  "%0"

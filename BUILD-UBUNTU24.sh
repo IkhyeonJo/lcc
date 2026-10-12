@@ -124,7 +124,9 @@ PY
 # Build the compiler itself.  The historical Linux driver is used as HOSTFILE.
 rm -rf "$WORK/lcc-build"
 mkdir -p "$WORK/lcc-build/include"
-cp -a "$LCC/include/x86/dos/." "$WORK/lcc-build/include/" 2>/dev/null || true
+# glibc-compatible ANSI headers (include/x86/linux/README.md); the DOS set's
+# stdio/setjmp/assert/errno do not match the glibc i386 ABI.
+cp -a "$LCC/include/x86/linux/." "$WORK/lcc-build/include/"
 # The compiler can be bootstrapped independently of the final Linux C library headers.
 # The historical lin-elf.c defaults LCCDIR to /usr/local/lib/lcc/.
 # For this self-contained build, point LCCDIR at the actual bootstrap output
